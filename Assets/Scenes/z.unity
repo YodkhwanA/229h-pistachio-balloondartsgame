@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &172898005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 172898006}
+  m_Layer: 0
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &172898006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172898005}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.73, z: 0.337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1517788733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883017589
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +496,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa514fa753008c548a34ad169472d336, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1092609753}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fa514fa753008c548a34ad169472d336, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 172898006}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fa514fa753008c548a34ad169472d336, type: 3}
       insertIndex: -1
@@ -561,9 +595,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  cdTime: 0
   mass: 0
   force: 0
+  newForce: 0
+  chargeCount: 0
+  shootPoint: {fileID: 172898006}
+  chargeSpeed: 5
+  ammoPrefab: {fileID: 8926114511911220818, guid: 9f20681ce241d3041a3449394ceabbd8, type: 3}
 --- !u!1 &2060946751
 GameObject:
   m_ObjectHideFlags: 0
