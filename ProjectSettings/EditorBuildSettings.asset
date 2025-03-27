@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/UIStartGame.unity
+    guid: f387df9ee0e0f924fb253b0317b81eba
+  - enabled: 1
+    path: Assets/Scenes/CarnivalScene.unity
+    guid: 8f51f7d4d8fdd00489d5cf97f9487e9f
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
