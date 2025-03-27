@@ -35,11 +35,11 @@ public class BalloonSpawner : MonoBehaviour
             Debug.Log("เวฟ " + currentRound + " จบ");
         }
 
-        Debug.Log("ทุกเวฟจบแล้ว! เปลี่ยนไปซีนถัดไป...");
-        SceneManager.LoadScene("NextScene"); // เปลี่ยนเป็นชื่อซีนถัดไป
+        
+        SceneManager.LoadScene("NextScene"); 
     }
 
-    // ฟังก์ชันลดจำนวนลูกโป่งเมื่อถูกทำลาย
+    
     public void BalloonDestroyed()
     {
         balloonCount--;
