@@ -8,6 +8,7 @@ public class Throw : MonoBehaviour
     public float force = 0f;
     public float newForce = 0f;
     public int chargeCount = 0;
+    
     public Transform shootPoint;
 
     public float chargeSpeed = 1f;
@@ -86,5 +87,7 @@ public class Throw : MonoBehaviour
            chargeCount--;
         }
     }
+
+   
 }
 
