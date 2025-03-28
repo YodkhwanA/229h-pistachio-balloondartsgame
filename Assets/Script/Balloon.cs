@@ -1,8 +1,11 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
     public int hp = 1;
+    public AudioClip popSfx;
+    public AudioSource BalloonAudio;
 
     public void TakeDamage(int damage)
     {
@@ -14,9 +17,11 @@ public class Balloon : MonoBehaviour
             {
                 spawner.BalloonDestroyed();
             }
+            BalloonAudio.PlayOneShot(popSfx);
+            Destroy(gameObject, popSfx.length);
 
-            Destroy(this.gameObject);
         }
+
     }
 }
 

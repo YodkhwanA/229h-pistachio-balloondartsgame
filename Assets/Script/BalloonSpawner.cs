@@ -1,17 +1,25 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Linq; 
 
 public class BalloonSpawner : MonoBehaviour
 {
     public GameObject balloonPrefab;
-    public Transform[] spawnPoints; // จุดเกิดลูกโป่ง
+    public Transform[] spawnPoints; 
     public int totalRounds = 3;
     private int currentRound = 0;
-    private int balloonCount = 0; 
+    private int balloonCount = 0;
+    private float[] waveTimes = { 60f, 50f, 40f }; 
 
+    public GameObject gameOverUI; 
+    public Button restartButton; 
     void Start()
     {
+        gameOverUI.SetActive(false);
+        restartButton.onClick.AddListener(RestartGame);
         StartCoroutine(SpawnRounds());
     }
 
@@ -20,29 +28,52 @@ public class BalloonSpawner : MonoBehaviour
         while (currentRound < totalRounds)
         {
             currentRound++;
-            Debug.Log("เริ่มเวฟที่ " + currentRound);
-
             
-            foreach (Transform spawnPoint in spawnPoints)
+
+            StartCoroutine(WaveTimer(waveTimes[currentRound - 1]));
+
+            List<Transform> shuffledPoints = spawnPoints.OrderBy(x => Random.value).Take(7).ToList();
+
+           
+            foreach (Transform spawnPoint in shuffledPoints)
             {
                 Instantiate(balloonPrefab, spawnPoint.position, Quaternion.identity);
-                balloonCount++; 
+                balloonCount++;
             }
 
-            
             yield return new WaitUntil(() => balloonCount <= 0);
 
-            Debug.Log("เวฟ " + currentRound + " จบ");
+            
         }
 
         
-        SceneManager.LoadScene("NextScene"); 
+        SceneManager.LoadSceneAsync("Ending");
     }
 
-    
+    IEnumerator WaveTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (balloonCount > 0)
+        {
+            GameOver();
+        }
+    }
+
     public void BalloonDestroyed()
     {
         balloonCount--;
+    }
+
+    void GameOver()
+    {
+       
+        gameOverUI.SetActive(true);
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
 
