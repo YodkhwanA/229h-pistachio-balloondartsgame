@@ -3,38 +3,41 @@ using UnityEngine.InputSystem;
 
 public class Throw : MonoBehaviour
 {
-    public float speed;
-    public float mass;
     public float force = 0f;
-    public float newForce = 0f;
     public int chargeCount = 0;
-    
+
     public Transform shootPoint;
 
-    public float chargeSpeed = 1f;
-    //private bool onClick = false;
+    public float chargeSpeed = 10f;
     private bool isChargingUp = true;
     public GameObject ammoPrefab;
 
-
+    public LineRenderer trajectoryLine;
 
     void Start()
     {
-
+        if (trajectoryLine == null)
+        {
+          
+            trajectoryLine = GetComponent<LineRenderer>();
+            
+        }
     }
+
     void Update()
     {
-       
         Charging();
-        
     }
-    void Charging()
 
+    void Charging()
     {
+        
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             chargeCount++;
         }
+
+       
         if (Input.GetKey(KeyCode.Mouse1))
         {
             if (isChargingUp)
@@ -57,37 +60,64 @@ public class Throw : MonoBehaviour
                     isChargingUp = true;
                 }
             }
+
+          
+            if (chargeCount > 0)
+            {
+                ShowTrajectory(force);
+            }
         }
+        // เมื่อปล่อยคลิกขวา
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             if (chargeCount > 0)
             {
-                newForce = force;
                 shoot();
-            
             }
+
             force = 0f;
             isChargingUp = true;
-                Debug.Log("newforce" + newForce);
 
-            }
-
+           
+            trajectoryLine.positionCount = 0;
         }
+    }
+
     void shoot()
     {
         if (chargeCount > 0)
         {
             GameObject ammo = Instantiate(ammoPrefab, shootPoint.position, transform.rotation);
             Rigidbody ammoRb = ammo.GetComponent<Rigidbody>();
+
             if (ammoRb != null)
             {
-
-                ammoRb.AddForce(shootPoint.forward * newForce, ForceMode.Impulse);
+                ammoRb.useGravity = true;
+                ammoRb.AddForce(shootPoint.forward * force, ForceMode.Impulse);
             }
-           chargeCount--;
+
+            chargeCount--;
         }
     }
 
-   
-}
+    void ShowTrajectory(float force)
+    {
+        Vector3 startPosition = shootPoint.position;
+        Vector3 startVelocity = shootPoint.forward * force;
 
+        int numPoints = 30;
+        float timeStep = 0.1f;
+
+        Vector3[] points = new Vector3[numPoints];
+        for (int i = 0; i < numPoints; i++)
+        {
+            float time = i * timeStep;
+            Vector3 displacement = startVelocity * time + 0.5f * Physics.gravity * time * time;
+            points[i] = startPosition + displacement;
+        }
+
+       
+        trajectoryLine.positionCount = numPoints;
+        trajectoryLine.SetPositions(points);
+    }
+}

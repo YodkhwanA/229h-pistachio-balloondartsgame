@@ -9,7 +9,6 @@ public class Balloon : MonoBehaviour
         hp -= damage;
         if (hp <= 0)
         {
-            // ค้นหา BalloonSpawner และแจ้งว่าลูกโป่งถูกทำลาย
             BalloonSpawner spawner = FindObjectOfType<BalloonSpawner>();
             if (spawner != null)
             {
