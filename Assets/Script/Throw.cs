@@ -16,6 +16,7 @@ public class Throw : MonoBehaviour
     public AudioSource PlayerAudio;
 
     public LineRenderer trajectoryLine;
+    public float mass = 1f;
 
     void Start()
     {
@@ -81,7 +82,7 @@ public class Throw : MonoBehaviour
                 ShowTrajectory(force);
             }
         }
-        // เมื่อปล่อยคลิกขวา
+        
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             if (chargeCount > 0)
@@ -110,7 +111,8 @@ public class Throw : MonoBehaviour
                 if (ammoRb != null)
                 {
                     ammoRb.useGravity = true;
-                    ammoRb.AddForce(shootPoint.forward * force, ForceMode.Impulse);
+                    float calculatedForce = mass * force;
+                    ammoRb.AddForce(shootPoint.forward * calculatedForce, ForceMode.Impulse);
                 }
                 PlayerAudio.PlayOneShot(throwSfx);
                 chargeCount--;
