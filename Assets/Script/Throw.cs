@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Throw : MonoBehaviour
 {
-    public float Acceleration = 0f;
+    public float throwForce = 0f;
     public int chargeCount = 0;
 
     public Transform shootPoint;
@@ -30,7 +30,7 @@ public class Throw : MonoBehaviour
         trajectoryLine.endWidth = 0.02f;
         if (chargeSlider != null)
         {
-            chargeSlider.SetSliderValue(Acceleration);
+            chargeSlider.SetSliderValue(throwForce);
         }
 
     }
@@ -53,33 +53,33 @@ public class Throw : MonoBehaviour
         {
             if (isChargingUp)
             {
-                Acceleration += chargeSpeed * Time.deltaTime;
+                throwForce += chargeSpeed * Time.deltaTime;
 
-                if (Acceleration >= 100f)
+                if (throwForce >= 100f)
                 {
-                    Acceleration = 100f;
+                    throwForce = 100f;
                     isChargingUp = false;
                 }
             }
             else
             {
-                Acceleration -= chargeSpeed * Time.deltaTime;
+                throwForce -= chargeSpeed * Time.deltaTime;
 
-                if (Acceleration <= 0f)
+                if (throwForce <= 0f)
                 {
-                    Acceleration = 0f;
+                    throwForce = 0f;
                     isChargingUp = true;
                 }
             }
             if (chargeSlider != null)
             {
-                chargeSlider.SetSliderValue(Acceleration);
+                chargeSlider.SetSliderValue(throwForce);
             }
 
 
             if (chargeCount > 0)
             {
-                ShowTrajectory(Acceleration);
+                ShowTrajectory(throwForce);
             }
         }
         
@@ -90,14 +90,14 @@ public class Throw : MonoBehaviour
                 shoot();
             }
 
-            Acceleration = 0f;
+            throwForce = 0f;
             isChargingUp = true;
 
 
             trajectoryLine.positionCount = 0;
             if (chargeSlider != null)
             {
-                chargeSlider.SetSliderValue(Acceleration);
+                chargeSlider.SetSliderValue(throwForce);
             }
         }
 
@@ -111,7 +111,7 @@ public class Throw : MonoBehaviour
                 if (ammoRb != null)
                 {
                     ammoRb.useGravity = true;
-                    float calculatedForce = mass * Acceleration;
+                    float calculatedForce = mass * throwForce;
                     ammoRb.AddForce(shootPoint.forward * calculatedForce, ForceMode.Impulse);
                 }
                 PlayerAudio.PlayOneShot(throwSfx);
